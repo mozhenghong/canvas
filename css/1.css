@@ -4,3 +4,17 @@
 
 #canvas {
   background: green; }
+
+.actions {
+  position: fixed;
+  bottom: 2px;
+  left: 2px; }
+
+.actions > #brush {
+  display: none; }
+
+.actions.x > #eraser {
+  display: none; }
+
+.actions.x > #brush {
+  display: inline-block; }
