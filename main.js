@@ -43,18 +43,18 @@ function usingEraser(){
     }
 }
 usingEraser()
-
-//键盘事件
-function mouseEvent(){
-    //按下鼠标
+//判断是否为触摸设备
+if('ontouchstart'in document.body){
+    //触摸事件
     var oldPoint={
         'x': undefined,
         'y':undefined
     }
-    document.onmousedown=function(a){
+    //开始触摸
+    canvas.ontouchstart = function(a){
         using = true
-        var x=a.clientX
-        var y=a.clientY
+        var x=a.touches[0].clientX
+        var y=a.touches[0].clientY
         if(eraserEnabled){
             ctx.clearRect(x-5,y-5,10,10)
         }else{
@@ -63,13 +63,13 @@ function mouseEvent(){
                 'y':y
             }
             // drawCircle(x,y,5)
-        }   
+        } 
     }
-    //移动鼠标
-    document.onmousemove =function(a){
+    //移动手指
+    canvas.ontouchmove = function(a){
         if(using){
-            var x=a.clientX
-            var y=a.clientY
+            var x=a.touches[0].clientX
+            var y=a.touches[0].clientY
             if(eraserEnabled){
                 ctx.clearRect(x-5,y-5,10,10)
             }else{
@@ -82,10 +82,54 @@ function mouseEvent(){
             }
         }
     }
-    //松开鼠标
-    document.onmouseup = function(a){
+    //结束触摸
+    canvas.ontouchend = function(a){
         using = false
     }
-}
+}else{
+    //鼠标事件
+    function mouseEvent(){
+        //按下鼠标
+        var oldPoint={
+            'x': undefined,
+            'y':undefined
+        }
+        canvas.onmousedown=function(a){
+            using = true
+            var x=a.clientX
+            var y=a.clientY
+            if(eraserEnabled){
+                ctx.clearRect(x-5,y-5,10,10)
+            }else{
+                oldPoint ={
+                    'x':x,
+                    'y':y
+                }
+                // drawCircle(x,y,5)
+            }   
+        }
+        //移动鼠标
+        canvas.onmousemove =function(a){
+            if(using){
+                var x=a.clientX
+                var y=a.clientY
+                if(eraserEnabled){
+                    ctx.clearRect(x-5,y-5,10,10)
+                }else{
+                    var newPoint={
+                        'x': x,
+                        'y': y
+                    }
+                    drawLine(oldPoint.x,oldPoint.y,newPoint.x,newPoint.y)
+                    oldPoint = newPoint
+                }
+            }
+        }
+        //松开鼠标
+        canvas.onmouseup = function(a){
+            using = false
+        }
+    }
 
-mouseEvent()
+    mouseEvent()
+}
