@@ -11,6 +11,9 @@ ol{
     fill: currentColor;
     overflow: hidden;
  }
+ body{
+     overflow: hidden;
+ }
 .actions{
     position: fixed;
     top: 0px;
@@ -26,12 +29,12 @@ ol{
     transform:scale(1.2);
     color: red;
 }
-ol{
+.colors{
     position:fixed;
     top:60px;
     left: 0px;
 }
-ol>li{
+.colors>li{
     width: 20px;
     height:20px;
     margin:20px;
@@ -39,18 +42,35 @@ ol>li{
     border:1px solid grey;
     transition:all 0.2s; 
 }
-ol>.active{
+.colors>.active{
     transform:scale(1.2)
 }
-ol>.black{
+.colors>.black{
     background: black;
 }
-ol>.red{
+.colors>.red{
     background: red;
 }
-ol>.green{
+.colors>.green{
     background: green;
 }
-ol>.blue{
+.colors>.blue{
     background: blue;
+}
+.line{
+    position:fixed;
+    top:0;
+    right: 0;
+    margin: 0 20px;
+}
+.line>li{
+    margin:30px 0;
+}
+.line>.thin{
+    width: 30px;
+    border-top: 5px solid black; 
+}
+.line>.thick{
+    width: 30px;
+    border-top: 10px solid black; 
 }

@@ -22,7 +22,7 @@ function drawCircle(x,y,radius){
 //画线
 function drawLine(x1,y1,x2,y2){
     ctx.beginPath()
-    ctx.lineWidth = 5
+    ctx.lineWidth = lineWidth
     ctx.moveTo(x1,y1)
     ctx.lineTo(x2,y2)
     ctx.stroke()
@@ -79,6 +79,31 @@ blue.onclick = function(){
     removeClassName(black)
     removeClassName(green)
     removeClassName(red)
+}
+//选画笔粗细
+var lineWidth = 5 
+
+thin.onclick = function(){
+    lineWidth = 5
+}
+thick.onclick = function(){
+    lineWidth = 10
+}
+
+//清屏
+clear.onclick= function(){
+    ctx.clearRect(0,0,canvas.width,canvas.height)
+}
+
+//保存图片
+save.onclick = function(){
+    var url = canvas.toDataURL("image/png")
+    var a =document.createElement('a')
+    document.body.appendChild(a)
+    a.href=url
+    a.download="画板"
+    a.target='_blank'
+    a.click()
 }
 
 //判断是否为触摸设备
