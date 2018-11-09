@@ -1,101 +1,91 @@
-var canvas=document.getElementById('canvas')
-var ctx=canvas.getContext('2d')
-var painting = false
-var eraserEnabled = false
-
-//工具函数
-
-function getWindowResize(canvas){
-    var pageWidth= document.documentElement.clientWidth
-    var pageHeight= document.documentElement.clientHeight
-    canvas.width =pageWidth
-    canvas.height=pageHeight
+var canvas = document.getElementById('canvas')
+var ctx = canvas.getContext('2d')
+var using = false
+//设置画板大小
+function canvasSize(canvas){
+    var pageWidth = document.documentElement.clientWidth
+    var pageHeight = document.documentElement.clientHeight
+    canvas.width = pageWidth
+    canvas.height = pageHeight 
 }
-
+canvasSize(canvas)
+window.onresize = function(a){
+    canvasSize(canvas)
+}
+//画圆
 function drawCircle(x,y,radius){
     ctx.beginPath()
-    ctx.fillStyle='#000'
-    ctx.arc(x,y,radius,0,7)
+    ctx.fillSytle = "black"
+    ctx.arc(x,y,radius,0,Math.PI*2)
     ctx.fill()
 }
 
+//画线
 function drawLine(x1,y1,x2,y2){
     ctx.beginPath()
+    ctx.lineWidth = 5
+    ctx.strokeStyle = "black"
     ctx.moveTo(x1,y1)
-    ctx.lineWidth=5
-    ctx.fillStyle='#000'
     ctx.lineTo(x2,y2)
     ctx.stroke()
-    ctx.closePath()
 }
 
-//使画板全屏
-setCanvasSize()
-function setCanvasSize(){
-    getWindowResize(canvas)
-    window.onresize = function(x){
-        getWindowResize(canvas)
+//触发橡皮擦
+var eraserEnabled = false
+function usingEraser(){
+    eraser.onclick = function(){
+        eraserEnabled = true
+        actions.className = 'actions x'
+    }
+    brush.onclick = function(){
+        eraserEnabled = false
+        actions.className = 'actions'
     }
 }
+usingEraser()
 
-//mouse事件
-
-setMouseEvent(canvas)
-function setMouseEvent(canvas){
-        //按下鼠标
-    var lastPoint = {
-        x: undefined,
-        y: undefined
+//键盘事件
+function mouseEvent(){
+    //按下鼠标
+    var oldPoint={
+        'x': undefined,
+        'y':undefined
     }
-    canvas.onmousedown=function(a){
-        var x = a.clientX
-        var y = a.clientY
-        painting = true
+    document.onmousedown=function(a){
+        using = true
+        var x=a.clientX
+        var y=a.clientY
         if(eraserEnabled){
             ctx.clearRect(x-5,y-5,10,10)
         }else{
-            lastPoint = {
-                "x": x,
-                "y": y
+            oldPoint ={
+                'x':x,
+                'y':y
             }
-            }
-        // drawCircle(x,y,5)
+            // drawCircle(x,y,5)
+        }   
     }
     //移动鼠标
-    canvas.onmousemove = function(a){
-        var x = a.clientX
-        var y = a.clientY
-        if(painting){
-            if(eraserEnabled){   
+    document.onmousemove =function(a){
+        if(using){
+            var x=a.clientX
+            var y=a.clientY
+            if(eraserEnabled){
                 ctx.clearRect(x-5,y-5,10,10)
             }else{
-            var newPoint = {
-                "x": x,
-                "y": y
+                var newPoint={
+                    'x': x,
+                    'y': y
+                }
+                drawLine(oldPoint.x,oldPoint.y,newPoint.x,newPoint.y)
+                oldPoint = newPoint
             }
-            //   drawCircle(x,y,5)
-            drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y)
-            lastPoint = newPoint
-        }
         }
     }
     //松开鼠标
-    canvas.onmouseup = function(z){
-        painting = false
+    document.onmouseup = function(a){
+        using = false
     }
 }
 
-//是否触发橡皮擦
-usingEraser(eraser,brush)
-function usingEraser(eraser,brush){
-    eraser.onclick = function(aa){
-        eraserEnabled = true
-        actions.className="actions x"
-    }
-    brush.onclick=function(bb){
-        eraserEnabled = false
-        actions.className="actions"
-    }
-}
-
-
+mouseEvent()
