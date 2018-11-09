@@ -2,20 +2,55 @@
     margin: 0;
     padding: 0;
 }
-#canvas{
-    background: grey;
+ol{
+    list-style: none;
 }
+.icon {
+    width: 1em; height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+ }
 .actions{
     position: fixed;
-    bottom: 2px;
-    left: 2px;
+    top: 0px;
+    left: 0px;
 }
-.actions>#brush{
-    display:none;
+.actions>svg{
+    width: 30px;
+    height: 30px;
+    margin:20px;
+    transition: all 0.3s;
 }
-.actions.x>#eraser{
-    display: none;
+.actions>.active{
+    transform:scale(1.2);
+    color: red;
 }
-.actions.x>#brush{
-    display: inline-block;
+ol{
+    position:fixed;
+    top:60px;
+    left: 0px;
+}
+ol>li{
+    width: 20px;
+    height:20px;
+    margin:20px;
+    border-radius: 50%;
+    border:1px solid grey;
+    transition:all 0.2s; 
+}
+ol>.active{
+    transform:scale(1.2)
+}
+ol>.black{
+    background: black;
+}
+ol>.red{
+    background: red;
+}
+ol>.green{
+    background: green;
+}
+ol>.blue{
+    background: blue;
 }

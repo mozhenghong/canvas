@@ -15,7 +15,6 @@ window.onresize = function(a){
 //画圆
 function drawCircle(x,y,radius){
     ctx.beginPath()
-    ctx.fillSytle = "black"
     ctx.arc(x,y,radius,0,Math.PI*2)
     ctx.fill()
 }
@@ -24,7 +23,6 @@ function drawCircle(x,y,radius){
 function drawLine(x1,y1,x2,y2){
     ctx.beginPath()
     ctx.lineWidth = 5
-    ctx.strokeStyle = "black"
     ctx.moveTo(x1,y1)
     ctx.lineTo(x2,y2)
     ctx.stroke()
@@ -35,14 +33,54 @@ var eraserEnabled = false
 function usingEraser(){
     eraser.onclick = function(){
         eraserEnabled = true
-        actions.className = 'actions x'
+        eraser.classList.add('active')
+        brush.classList.remove('active')
+        
     }
     brush.onclick = function(){
         eraserEnabled = false
-        actions.className = 'actions'
+        brush.classList.add('active')
+        eraser.classList.remove('active')
     }
 }
 usingEraser()
+
+//选画笔颜色
+function addClassName(id){
+    id.classList.add('active')
+}
+function removeClassName(id){
+    id.classList.remove('active')
+}
+black.onclick=function(){
+    ctx.strokeStyle ='black'
+    addClassName(black)
+    removeClassName(red)
+    removeClassName(green)
+    removeClassName(blue)
+}
+red.onclick = function(){
+    ctx.strokeStyle = 'red'
+    addClassName(red)
+    removeClassName(black)
+    removeClassName(green)
+    removeClassName(blue)
+}
+green.onclick = function(){
+    ctx.strokeStyle ='green'
+    addClassName(green)
+    removeClassName(black)
+    removeClassName(red)
+    removeClassName(blue)
+}
+blue.onclick = function(){
+    ctx.strokeStyle='blue'
+    addClassName(blue)
+    removeClassName(black)
+    removeClassName(green)
+    removeClassName(red)
+}
+
 //判断是否为触摸设备
 if('ontouchstart'in document.body){
     //触摸事件
