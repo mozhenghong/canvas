@@ -23,7 +23,7 @@ body {
 .actions > svg {
   width: 30px;
   height: 30px;
-  margin: 20px;
+  margin: 20px 15px;
   transition: all 0.3s; }
 
 .actions > .active {
